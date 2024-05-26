@@ -52,4 +52,6 @@ body {
 .cell {
   @apply border border-slate-50;
   @apply size-12;
+  @apply grid place-items-center;
+  @apply font-bold text-xl uppercase;
 }
