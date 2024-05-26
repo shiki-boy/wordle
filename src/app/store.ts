@@ -4,6 +4,7 @@ interface StoreState {
   chances: string[];
   indexToUpdate: number;
   gameOver: boolean;
+  solution: string;
   update: (word: string | null) => void; // eslint-disable-line
   submit: () => void;
 }
@@ -12,6 +13,7 @@ export const useWordleStore = create<StoreState>()( ( set ) => ( {
   chances: new Array( 6 ).fill( '' ),
   gameOver: false,
   indexToUpdate: 0,
+  solution: 'fruit',
   submit: () =>
     set( ( state ) => {
       if ( 5 !== state.chances[state.indexToUpdate].length || 5 === state.indexToUpdate ) {
