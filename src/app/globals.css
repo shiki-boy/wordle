@@ -31,3 +31,25 @@ body {
     text-wrap: balance;
   }
 }
+
+.header {
+  @apply text-2xl text-center font-bold underline underline-offset-4;
+  @apply py-4;
+  @apply border-b-[0.2px] border-slate-500;
+  text-decoration-thickness: 1.5px;
+}
+
+.app-container {
+  @apply grid place-items-center content-center gap-2;
+  @apply h-full;
+  @apply flex-1;
+}
+
+.row  {
+  @apply flex gap-1;
+}
+
+.cell {
+  @apply border border-slate-50;
+  @apply size-12;
+}
