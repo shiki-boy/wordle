@@ -5,9 +5,10 @@ import classNames from 'classnames'
 import './globals.css'
 
 import { useWordleStore } from './store'
+import { GameStateEnum } from './enums'
 
 export default function Home() {
-  const { chances, update, submit, solution, indexToUpdate } = useWordleStore()
+  const { chances, update, submit, solution, indexToUpdate, gameState } = useWordleStore()
 
   const cells = new Array( 5 ).fill( '' ),
         rows = new Array( 6 ).fill( '' )
@@ -16,6 +17,10 @@ export default function Home() {
 
   const handleKeyPress = useCallback(
     ( e: KeyboardEvent ) => {
+      if ( gameState !== GameStateEnum.IN_PROGRESS ) {
+        return
+      }
+
       if ( /^[a-zA-Z]$/.test( e.key ) ) {
         update( e.key )
         return
@@ -31,7 +36,7 @@ export default function Home() {
         return
       }
     },
-    [ update, submit ],
+    [ update, submit, gameState ],
   )
 
   useEffect( () => {
@@ -41,6 +46,17 @@ export default function Home() {
       document.removeEventListener( 'keyup', handleKeyPress )
     }
   }, [ handleKeyPress ] )
+
+  useEffect( () => {
+    if ( gameState !== GameStateEnum.IN_PROGRESS ) {
+      if ( gameState === GameStateEnum.WIN ) {
+        alert( 'You win!' )
+      } else {
+        alert( 'No Guesses left' )
+      }
+    }
+  }, [ gameState ] )
+
 
   return (
     <main className='h-screen flex flex-col'>

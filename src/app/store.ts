@@ -1,9 +1,10 @@
 import { create } from 'zustand'
+import { GameStateEnum } from './enums'
 
 interface StoreState {
   chances: string[];
   indexToUpdate: number;
-  gameOver: boolean;
+  gameState: GameStateEnum;
   solution: string;
   update: (word: string | null) => void; // eslint-disable-line
   submit: () => void;
@@ -11,18 +12,32 @@ interface StoreState {
 
 export const useWordleStore = create<StoreState>()( ( set ) => ( {
   chances: new Array( 6 ).fill( '' ),
-  gameOver: false,
+  gameState: GameStateEnum.IN_PROGRESS,
   indexToUpdate: 0,
   solution: 'fruit',
   submit: () =>
     set( ( state ) => {
-      if ( 5 !== state.chances[state.indexToUpdate].length || 5 === state.indexToUpdate ) {
-        return state
+      if (
+        5 !== state.chances[state.indexToUpdate].length
+        || 5 === state.indexToUpdate || state.gameState !== GameStateEnum.IN_PROGRESS
+      ) {
+        return { gameState: GameStateEnum.LOSE }
       }
-      return ( {
-        gameOver: 4 === state.indexToUpdate,
+
+      let _gameState: GameStateEnum = state.gameState
+
+      if ( state.solution === state.chances[state.indexToUpdate] ) {
+        _gameState = GameStateEnum.WIN
+      }
+
+      if ( 5 === state.indexToUpdate ) {
+        _gameState = GameStateEnum.LOSE
+      }
+
+      return {
+        gameState: _gameState,
         indexToUpdate: state.indexToUpdate + 1,
-      } )
+      }
     } ),
   update: ( letter: string | null ) =>
     set( ( state ) => {
