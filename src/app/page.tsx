@@ -50,9 +50,13 @@ export default function Home() {
   useEffect( () => {
     if ( gameState !== GameStateEnum.IN_PROGRESS ) {
       if ( gameState === GameStateEnum.WIN ) {
-        alert( 'You win!' )
+        setTimeout( () => {
+          alert( 'You win!' )
+        }, 400 )
       } else {
-        alert( 'No Guesses left' )
+        setTimeout( () => {
+          alert( 'No Guesses left' )
+        }, 400 )
       }
     }
   }, [ gameState ] )
