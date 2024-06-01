@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable sort-keys */
 import { useCallback, useEffect } from 'react'
 import classNames from 'classnames'
 
@@ -8,10 +9,11 @@ import { useWordleStore } from './store'
 import { GameStateEnum } from './enums'
 
 export default function Home() {
-  const { chances, update, submit, solution, indexToUpdate, gameState } = useWordleStore()
+  const { chances, update, submit, solution, indexToUpdate, gameState }
+    = useWordleStore()
 
   const cells = new Array( 5 ).fill( '' ),
-        rows = new Array( 6 ).fill( '' )
+        rows = new Array( 5 ).fill( '' )
 
   // console.log( 33 )
 
@@ -61,17 +63,29 @@ export default function Home() {
     }
   }, [ gameState ] )
 
+  const x = () => {
+    fetch( 'http://localhost:8080/ping' )
+      .then( ( res ) => res.json() )
+      .then( ( data ) => console.log( { data } ) )
+  }
 
   return (
     <main className='h-screen flex flex-col'>
-      <header className='header'>WORDLE</header>
+      <header className='header' onClick={ x }>
+        WORDLE
+      </header>
 
       <section className='app-container'>
         {rows.map( ( r, i ) => (
-          <div className='row' key={ i }>
+          <div className='row l-s' key={ i }>
             {cells.map( ( c, j ) => (
               <div
                 className={ classNames( 'cell', {
+                  'l-s': 0 === j,
+                  'lm-s': 1 === j,
+                  'm-s': 2 === j,
+                  'rm-s': 4 === j,
+                  'r-s': 5 === j,
                   close:
                     indexToUpdate > i
                     && chances[i][j] !== solution[j]

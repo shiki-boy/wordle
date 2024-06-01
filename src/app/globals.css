@@ -8,7 +8,7 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
@@ -18,12 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #e0e0e0;
 }
 
 @layer utilities {
@@ -45,22 +40,34 @@ body {
   @apply flex-1;
 }
 
-.row  {
-  @apply flex gap-1;
+.row {
+  @apply flex;
+  gap: 0.75rem;
+  margin-bottom: 0.2rem;
 }
 
 .cell {
-  @apply border border-slate-50;
-  @apply size-12;
+  /* @apply border border-slate-50; */
+  @apply size-20;
   @apply grid place-items-center;
   @apply font-bold text-xl uppercase;
   transition: all 0.4s ease-in;
-}
 
-.correct {
-  @apply bg-green-400;
-}
+  border-radius: 14px;
+  box-shadow: -10px 10px 20px #afa8ae,
+    10px -10px 20px #fbf2fa;
 
-.close {
-  @apply bg-orange-600;
+  &.correct {
+    background: linear-gradient(315deg, #57af71, #49945f);
+    box-shadow: -8px -8px 16px #4a9560,
+      8px 8px 16px #58b374;
+  }
+
+  &.close {
+    background: linear-gradient(225deg, #dc955b, #b97d4d);
+    box-shadow: -10px 10px 20px #a97246,
+      10px -10px 20px #f3a464;
+  }
+
+  border-radius: 14px;
 }
